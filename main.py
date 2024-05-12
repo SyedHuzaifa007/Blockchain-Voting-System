@@ -408,7 +408,11 @@ def votingResults():
     
     result = model.getTotalCount()
     t_user = model.getTotalUserCount()
-    totalCount=Label(resultFrame,text="{}  /  {}".format(result[0], t_user[0]),font=("",15,"bold"), bg="white")
+    if result and t_user:  # Check if both result and t_user are not None
+        totalCount = Label(resultFrame, text="{}  /  {}".format(result[0], t_user[0]), font=("", 15, "bold"), bg="white")
+    else:
+        totalCount = Label(resultFrame, text="N/A", font=("", 15, "bold"), bg="white")
+
     totalCount.place(x=400,y=50)
 
     result1 = model.getPartyCount("BJP")
