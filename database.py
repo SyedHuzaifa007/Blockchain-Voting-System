@@ -1,14 +1,12 @@
-import pyodbc
+import pymssql
 
 # Connect with SQL Server database - Host Name - PORT No. - UserName - Password - Database name
-mydb = pyodbc.connect(
-    "Driver={SQL Server};"
-    "Server=103.31.104.114;"
-    "UID=user;"
-    "PWD=12345678;"
-    "Database=voting_system;"
+mydb = pymssql.connect(
+    server='103.31.104.114',
+    user='user',
+    password='12345678',
+    database='voting_system'
 )
-
 
 def connect():
     try:

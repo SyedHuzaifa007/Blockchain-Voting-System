@@ -111,7 +111,7 @@ def dashboard(voterId):
 def voterRegistration():
     voterId = StringVar()
     name = StringVar()
-    aadhar = StringVar()
+    cnic = StringVar()
     phone = StringVar()
     gender = StringVar()
     RegistrationFrame = Frame()
@@ -131,9 +131,9 @@ def voterRegistration():
     input1 = Entry(RegistrationFrame, font=(ARIAL, 12), textvariable=name, border=0, bg="#f0f0f0")
     input1.place(x=250, y=175, width="200", height="25")
 
-    label2 = Label(RegistrationFrame, text="Aadhar Card Number", font=(ARIAL, 12, "normal"), bg="white")
+    label2 = Label(RegistrationFrame, text="CNIC Number", font=(ARIAL, 12, "normal"), bg="white")
     label2.place(x=30, y=225)
-    input2 = Entry(RegistrationFrame, font=(ARIAL, 12), textvariable=aadhar, border=0, bg="#f0f0f0")
+    input2 = Entry(RegistrationFrame, font=(ARIAL, 12), textvariable=cnic, border=0, bg="#f0f0f0")
     input2.place(x=250, y=225, width="200", height="25")
 
     label3 = Label(RegistrationFrame, text="Mobile Number", font=(ARIAL, 12, "normal"), bg="white")
@@ -148,19 +148,19 @@ def voterRegistration():
     
 
     def Register():
-        if voterId.get() == "" or name.get() == "" or aadhar.get() == "" or phone.get() == "" or gender.get() == "":
+        if voterId.get() == "" or name.get() == "" or cnic.get() == "" or phone.get() == "" or gender.get() == "":
             messagebox.showwarning('Voting System Message', 'All field is requird')
 
         else:
-            if len(aadhar.get()) == 12 and len(phone.get()) == 10 and aadhar.get().isdigit() and phone.get().isdigit():
-                result = model.findByAadhar(aadhar.get())
+            if len(cnic.get()) == 12 and len(phone.get()) == 10 and cnic.get().isdigit() and phone.get().isdigit():
+                result = model.findBycnic(cnic.get())
                 result1 = model.findByVoterId(voterId.get())
                 if((result == None) and (result1 == None)):
-                    if model.addVoter(voterId.get(), name.get(), aadhar.get(), phone.get(), gender.get()):
+                    if model.addVoter(voterId.get(), name.get(), cnic.get(), phone.get(), gender.get()):
                         messagebox.showinfo('Voting System Message', 'Registered as Voter')
                         voterId.set("")
                         name.set("")
-                        aadhar.set("")
+                        cnic.set("")
                         phone.set("")
                         gender.set("")
                         voterLogin()
@@ -172,7 +172,7 @@ def voterRegistration():
                     messagebox.showerror('Voting System Message', 'Wrong Credentials')                
 
             else:
-                messagebox.showerror('Voting System Message', 'Aadhar number must be 12 digit and Mobile number must be 10 digit')
+                messagebox.showerror('Voting System Message', 'cnic number must be 12 digit and Mobile number must be 10 digit')
 
 
     Register_btn = Button(RegistrationFrame, text="Register", font=(ARIAL, 13, "bold"), command=Register, border=0, bg=HIGHLIGHT_BG, fg="white")
@@ -184,7 +184,7 @@ def voterRegistration():
 def AdminRegistration():
     regId = StringVar()
     name = StringVar()
-    aadhar = StringVar()
+    cnic = StringVar()
     phone = StringVar()
     gender = StringVar()
 
@@ -204,10 +204,10 @@ def AdminRegistration():
     nameInput = Entry(AdminFrame, font=(ARIAL, 12), textvariable=name, border=0, bg="#f0f0f0")
     nameInput.place(x=250, y=175, width="200", height="25")
 
-    aadharLabel = Label(AdminFrame, text="Aadhar Card Number", font=(ARIAL, 12, "normal"), bg="white")
-    aadharLabel.place(x=30, y=225)
-    aadharInput = Entry(AdminFrame, font=(ARIAL, 12), textvariable=aadhar, border=0, bg="#f0f0f0")
-    aadharInput.place(x=250, y=225, width="200", height="25")
+    cnicLabel = Label(AdminFrame, text="CNIC Number", font=(ARIAL, 12, "normal"), bg="white")
+    cnicLabel.place(x=30, y=225)
+    cnicInput = Entry(AdminFrame, font=(ARIAL, 12), textvariable=cnic, border=0, bg="#f0f0f0")
+    cnicInput.place(x=250, y=225, width="200", height="25")
 
     phoneLabel = Label(AdminFrame, text="Mobile Number", font=(ARIAL, 12, "normal"), bg="white")
     phoneLabel.place(x=30, y=275)
@@ -221,19 +221,19 @@ def AdminRegistration():
 
    
     def Register():
-        if regId.get() == "" or name.get() == "" or aadhar.get() == "" or phone.get() == "" or gender.get() == "" :
+        if regId.get() == "" or name.get() == "" or cnic.get() == "" or phone.get() == "" or gender.get() == "" :
             messagebox.showwarning('Voting System Message', 'All field is requird')
 
         else:
-            if len(aadhar.get()) == 12 and len(phone.get()) == 10 and aadhar.get().isdigit() and phone.get().isdigit():
-                result = model.findByAadharinAdmin(aadhar.get())
+            if len(cnic.get()) == 12 and len(phone.get()) == 10 and cnic.get().isdigit() and phone.get().isdigit():
+                result = model.findBycnicinAdmin(cnic.get())
                 result1 = model.findByRegId(regId.get())
                 if((result == None) and (result1 == None)):
-                    if(model.addAdmin(regId.get(), name.get(), aadhar.get(), phone.get(), gender.get())):
+                    if(model.addAdmin(regId.get(), name.get(), cnic.get(), phone.get(), gender.get())):
                         messagebox.showinfo('Voting System Message', 'Registered as Admin')
                         regId.set("")
                         name.set("")
-                        aadhar.set("")
+                        cnic.set("")
                         phone.set("")
                         gender.set("")
                         AdminLogin()
@@ -242,10 +242,10 @@ def AdminRegistration():
                         messagebox.showwarning('Voting System Message', 'Try again later, unable to register admin')
 
                 else:
-                    messagebox.showerror('Voting System Message', 'Aadhar number is already register')
+                    messagebox.showerror('Voting System Message', 'cnic number is already register')
 
             else:
-                messagebox.showwarning('Voting System Message', 'Aadhar number must be 12 digit and Mobile number must be 10 digit')
+                messagebox.showwarning('Voting System Message', 'cnic number must be 12 digit and Mobile number must be 10 digit')
 
     
 
@@ -462,20 +462,20 @@ def showAllRecord():
 
 
 def searchUser():
-    aadhar = StringVar()
+    cnic = StringVar()
     SearchFrame = Frame()
     SearchFrame.place(x=250, y=0, width=650, height=500)
     SearchFrame.configure(background="white")
-    aadharLabel = Label(SearchFrame, text="Aadhar Card Number", font=("", 13, "normal"), bg="white")
-    aadharLabel.place(x=50, y=55, height=30)
-    aadharInput = Entry(SearchFrame, textvariable=aadhar,font=("",12,"normal"), bg="#f0f0f0", border=0)
-    aadharInput.place(x=230, y=55, width=170, height=30)
+    cnicLabel = Label(SearchFrame, text="CNIC Number", font=("", 13, "normal"), bg="white")
+    cnicLabel.place(x=50, y=55, height=30)
+    cnicInput = Entry(SearchFrame, textvariable=cnic,font=("",12,"normal"), bg="#f0f0f0", border=0)
+    cnicInput.place(x=230, y=55, width=170, height=30)
     def search():
-        if aadhar.get() == "" or len(aadhar.get()) != 12 or not aadhar.get().isdigit():
-            messagebox.showwarning('Voting System Message', '🎱 Field is requird\n🎱 Aadhar number length must be 12 digit')
+        if cnic.get() == "" or len(cnic.get()) != 12 or not cnic.get().isdigit():
+            messagebox.showwarning('Voting System Message', '🎱 Field is requird\n🎱 cnic number length must be 12 digit')
 
         else:
-            user = model.getUserByAadhar(aadhar.get())
+            user = model.getUserBycnic(cnic.get())
             if(user == None):
                 messagebox.showinfo('Voting System Message', 'No such User')
 
@@ -507,7 +507,7 @@ def searchUser():
 
 
 def updateUser():
-    aadhar = StringVar()
+    cnic = StringVar()
     name = StringVar()
     phone = StringVar()
     gender = StringVar()
@@ -515,16 +515,16 @@ def updateUser():
     UpdateFrame = Frame()
     UpdateFrame.place(x=250, y=0, width=650, height=500)
     UpdateFrame.configure(background="white")
-    aadharLabel = Label(UpdateFrame, text="Aadhar Card Number", font=("", 13, "normal"), bg="white")
-    aadharLabel.place(x=50, y=55, height=30)
-    aadharInput = Entry(UpdateFrame, textvariable=aadhar,font=("",12,"normal"), bg="#f0f0f0", border=0)
-    aadharInput.place(x=230, y=55, width=170, height=30)
+    cnicLabel = Label(UpdateFrame, text="CNIC Number", font=("", 13, "normal"), bg="white")
+    cnicLabel.place(x=50, y=55, height=30)
+    cnicInput = Entry(UpdateFrame, textvariable=cnic,font=("",12,"normal"), bg="#f0f0f0", border=0)
+    cnicInput.place(x=230, y=55, width=170, height=30)
     def search():
-        if aadhar.get() == "" or len(aadhar.get()) != 12 or not aadhar.get().isdigit():
-            messagebox.showwarning('Voting System Message', '🎱 Field is requird\n🎱 Aadhar number length must be 12 digit')
+        if cnic.get() == "" or len(cnic.get()) != 12 or not cnic.get().isdigit():
+            messagebox.showwarning('Voting System Message', '🎱 Field is requird\n🎱 cnic number length must be 12 digit')
 
         else:
-            user = model.findByAadhar(aadhar.get())
+            user = model.findBycnic(cnic.get())
             if(user == None):
                 messagebox.showinfo('Voting System Message', 'No such User')
 
@@ -560,7 +560,7 @@ def updateUser():
                         messagebox.showwarning('Voting System Message', '🎱 Field is requird\n🎱 Mobile number length must be 10 digit')
 
                     else:
-                        if(model.updateUserByAadhar(name.get(), phone.get(), gender.get(), aadhar.get())):
+                        if(model.updateUserBycnic(name.get(), phone.get(), gender.get(), cnic.get())):
                             messagebox.showinfo('Voting System Message', 'Updated Successfully!!')
                         else:
                             messagebox.showwarning('Voting System Message', 'Try again later, unable to update user')
@@ -568,7 +568,7 @@ def updateUser():
                         name.set("")
                         phone.set("")
                         gender.set("")
-                        aadhar.set("")
+                        cnic.set("")
 
                 update_btn = Button(DataFrame, text="Update", font=(ARIAL, 12, "normal"), command=update, border=0, bg=HIGHLIGHT_BG, fg="white")
                 update_btn.place(x=150, y=175, width=100, height=40)
@@ -578,30 +578,30 @@ def updateUser():
 
 
 def deleteUser():
-    aadhar = StringVar()
+    cnic = StringVar()
     DeleteFrame = Frame()
     DeleteFrame.place(x=250, y=0, width=650, height=500)
     DeleteFrame.configure(background="white")
-    aadharLabel = Label(DeleteFrame, text="Aadhar Number", font=(ARIAL, 13, "bold"), bg="white")
-    aadharLabel.place(x=100, y=150, height=30)
-    aadharValue = Entry(DeleteFrame, textvariable=aadhar,font=(ARIAL,12,"normal"), bg="#f0f0f0", border=0)
-    aadharValue.place(x=275, y=150, width=250, height=30)
+    cnicLabel = Label(DeleteFrame, text="cnic Number", font=(ARIAL, 13, "bold"), bg="white")
+    cnicLabel.place(x=100, y=150, height=30)
+    cnicValue = Entry(DeleteFrame, textvariable=cnic,font=(ARIAL,12,"normal"), bg="#f0f0f0", border=0)
+    cnicValue.place(x=275, y=150, width=250, height=30)
     def delete():
-        if aadhar.get() == "" or len(aadhar.get()) != 12 or not aadhar.get().isdigit():
-            messagebox.showwarning('Voting System Message', '🎱 Field is requird\n🎱 Aadhar number length must be 12 digit')
+        if cnic.get() == "" or len(cnic.get()) != 12 or not cnic.get().isdigit():
+            messagebox.showwarning('Voting System Message', '🎱 Field is requird\n🎱 cnic number length must be 12 digit')
 
         else:
-            userResult = model.findByAadhar(aadhar.get())
+            userResult = model.findBycnic(cnic.get())
             if(userResult == None):
                 messagebox.showinfo('Voting System Message', 'No such User')
 
             else:
-                if(model.deleteUserByAadhar(aadhar.get())):
+                if(model.deleteUserBycnic(cnic.get())):
                     messagebox.showinfo('Voting System Message', 'User Deleted')
                 else:
                     messagebox.showwarning('Voting System Message', 'Try again later, unable to delete user')
 
-            aadhar.set("")
+            cnic.set("")
 
     delete_btn = Button(DeleteFrame, text="Delete", font=(ARIAL, 13, "normal"), command=delete, border=0, bg=HIGHLIGHT_BG, fg="white")
     delete_btn.place(x=250, y=230, width=150, height=40)
