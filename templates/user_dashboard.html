@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login/Register</title>
+    <title>User Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -30,17 +30,13 @@
         label {
             font-weight: bold;
         }
-        input[type="text"],
-        input[type="password"] {
+        select {
             width: 100%;
             padding: 8px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
-        }
-        input[type="radio"] {
-            margin-right: 5px;
         }
         button[type="submit"] {
             background-color: #007bff;
@@ -59,18 +55,15 @@
     </style>
 </head>
 <body>
-    <form method="POST" action="/">
-        <h2>Login/Register</h2>
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
-        <input type="radio" id="admin" name="role" value="admin" required>
-        <label for="admin">Admin</label>
-        <input type="radio" id="user" name="role" value="user" required>
-        <label for="user">User</label><br><br>
-        <button type="submit" name="action" value="login">Login</button>
-        <button type="submit" name="action" value="signup">Register</button>
+    <form method="POST" action="/vote">
+        <h2>Vote</h2>
+        <label for="candidate">Select Candidate:</label><br>
+        <select id="candidate" name="candidate" required>
+            {% for candidate in candidates %}
+            <option value="{{ candidate.id }}">{{ candidate.candidate_name }} ({{ candidate.party_affiliation }})</option>
+            {% endfor %}
+        </select><br><br>
+        <button type="submit">Vote</button>
     </form>
 </body>
 </html>

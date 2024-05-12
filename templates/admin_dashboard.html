@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="/create_election">
+        <h2>Create Election</h2>
+        <label for="election_name">Election Name:</label><br>
+        <input type="text" id="election_name" name="election_name" required><br><br>
+        <label for="start_date">Start Date:</label><br>
+        <input type="date" id="start_date" name="start_date" required><br><br>
+        <label for="end_date">End Date:</label><br>
+        <input type="date" id="end_date" name="end_date" required><br><br>
+        <button type="submit">Create Election</button>
+    </form>
+
+    <form method="POST" action="/add_candidate">
+        <h2>Add Candidate</h2>
+        <label for="election_id">Select Election:</label><br>
+        <select id="election_id" name="election_id" required>
+            {% for election in elections %}
+            <option value="{{ election.id }}">{{ election.election_name }} - {{ election.start_date }} to {{ election.end_date }}</option>
+            {% endfor %}
+        </select><br><br>
+        <label for="candidate_name">Candidate Name:</label><br>
+        <input type="text" id="candidate_name" name="candidate_name" required><br><br>
+        <label for="party_affiliation">Party Affiliation:</label><br>
+        <input type="text" id="party_affiliation" name="party_affiliation"><br><br>
+        <button type="submit">Add Candidate</button>
+    </form>
+</body>
+</html>
