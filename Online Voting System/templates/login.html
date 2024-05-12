@@ -1,0 +1,119 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Voting System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-form {
+            margin-bottom: 20px;
+        }
+
+        .login-form h2 {
+            margin-bottom: 10px;
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .signup-link {
+            text-align: center;
+        }
+
+        .signup-link p {
+            margin-top: 20px;
+        }
+
+        .signup-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Online Voting System</h1>
+        <div class="login-form">
+            <h2>Login</h2>
+            <!-- Form for login -->
+            <form action="/login" method="POST">
+                <!-- Radio buttons for selecting user type -->
+                <input type="radio" id="admin" name="user_type" value="admin" checked>
+                <label for="admin">Admin</label>
+                <input type="radio" id="voter" name="user_type" value="voter">
+                <label for="voter">Voter</label>
+
+                <!-- Input fields for username and password -->
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+
+                <!-- Submit button -->
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <div class="signup-link">
+            <!-- Link to sign up page -->
+            <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+        </div>
+    </div>
+</body>
+</html> {% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
