@@ -11,20 +11,32 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* Added to align elements vertically */
             align-items: center;
-            height: 100vh;
+            justify-content: center;
+            min-height: 100vh;
         }
-        form {
-            background-color: #fff;
+        .header {
+            text-align: center;
             padding: 20px;
+            background-color: #007bff;
+            color: white;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000; /* Ensure it's above other content */
+        }
+        .card {
+            background-color: #fff;
+            padding: 30px; /* Increased padding */
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 400px; /* Increased width */
+            margin-top: 70px; /* Adjusted to make space for header */
         }
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px; /* Increased margin */
             color: #333;
         }
         label {
@@ -32,25 +44,27 @@
         }
         input[type="text"],
         input[type="password"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            width: calc(100% - 16px); /* Adjusted width */
+            padding: 12px; /* Increased padding */
+            margin-bottom: 20px; /* Increased margin */
+            border-radius: 8px;
             box-sizing: border-box;
+            font-size: 18px; /* Increased font size */
         }
         input[type="radio"] {
-            margin-right: 5px;
+            vertical-align: middle; /* Align radio buttons vertically */
+            margin-right: 5px; /* Added margin */
         }
         button[type="submit"] {
+            width: calc(100% - 16px); /* Adjusted width */
+            padding: 12px; /* Increased padding */
+            margin-bottom: 20px; /* Increased margin */
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px; /* Increased font size */
             background-color: #007bff;
             color: #fff;
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
             transition: background-color 0.3s ease;
         }
         button[type="submit"]:hover {
@@ -59,18 +73,26 @@
     </style>
 </head>
 <body>
-    <form method="POST" action="/">
-        <h2>Login/Register</h2>
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
-        <input type="radio" id="admin" name="role" value="admin" required>
-        <label for="admin">Admin</label>
-        <input type="radio" id="user" name="role" value="user" required>
-        <label for="user">User</label><br><br>
-        <button type="submit" name="action" value="login">Login</button>
-        <button type="submit" name="action" value="signup">Register</button>
-    </form>
+    <div class="header">
+        <h1>E-Voting System</h1>
+    </div>
+    <div class="card">
+        <form method="POST" action="/">
+            <h2>Login/Register</h2>
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br>
+            <label for="role">Role:</label><br>
+            <br>
+            <input type="radio" id="admin" name="role" value="admin" required>
+            <label for="admin">Admin</label>
+            <input type="radio" id="user" name="role" value="user" required>
+            <label for="user">User</label><br>
+            <br><br>
+            <button type="submit" name="action" value="login">Login</button>
+            <button type="submit" name="action" value="signup">Register</button>
+        </form>
+    </div>
 </body>
 </html>

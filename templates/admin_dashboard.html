@@ -11,16 +11,35 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
         }
-        form {
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            z-index: 1000;
+        }
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-top: 70px; /* Adjusted margin-top */
+        }
+        .card {
             background-color: #fff;
-            padding: 20px;
+            padding: 30px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 400px;
+            margin: 0 10px 20px;
         }
         h2 {
             text-align: center;
@@ -31,63 +50,66 @@
             font-weight: bold;
         }
         input[type="text"],
-        input[type="date"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
+        input[type="date"],
+        select {
+            width: calc(100% - 16px);
+            padding: 12px;
+            margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+            font-size: 18px;
         }
         button[type="submit"] {
-            background-color: #007bff;
-            color: #fff;
+            width: calc(100% - 16px);
+            padding: 12px;
             border: none;
-            padding: 10px 20px;
             border-radius: 4px;
             cursor: pointer;
-            width: 100%;
-            font-size: 16px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
             transition: background-color 0.3s ease;
         }
         button[type="submit"]:hover {
             background-color: #0056b3;
         }
-        select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
     </style>
 </head>
 <body>
-    <form method="POST" action="/create_election">
-        <h2>Create Election</h2>
-        <label for="election_name">Election Name:</label><br>
-        <input type="text" id="election_name" name="election_name" required><br><br>
-        <label for="start_date">Start Date:</label><br>
-        <input type="date" id="start_date" name="start_date" required><br><br>
-        <label for="end_date">End Date:</label><br>
-        <input type="date" id="end_date" name="end_date" required><br><br>
-        <button type="submit">Create Election</button>
-    </form>
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+    </div>
+    <div class="cards-container">
+        <div class="card">
+            <form method="POST" action="/create_election">
+                <h2>Create Election</h2>
+                <label for="election_name">Election Name:</label><br>
+                <input type="text" id="election_name" name="election_name" required><br>
+                <label for="start_date">Start Date:</label><br>
+                <input type="date" id="start_date" name="start_date" required><br>
+                <label for="end_date">End Date:</label><br>
+                <input type="date" id="end_date" name="end_date" required><br>
+                <button type="submit">Create Election</button>
+            </form>
+        </div>
 
-    <form method="POST" action="/add_candidate">
-        <h2>Add Candidate</h2>
-        <label for="election_id">Select Election:</label><br>
-        <select id="election_id" name="election_id" required>
-            {% for election in elections %}
-            <option value="{{ election.id }}">{{ election.election_name }} - {{ election.start_date }} to {{ election.end_date }}</option>
-            {% endfor %}
-        </select><br><br>
-        <label for="candidate_name">Candidate Name:</label><br>
-        <input type="text" id="candidate_name" name="candidate_name" required><br><br>
-        <label for="party_affiliation">Party Affiliation:</label><br>
-        <input type="text" id="party_affiliation" name="party_affiliation"><br><br>
-        <button type="submit">Add Candidate</button>
-    </form>
+        <div class="card">
+            <form method="POST" action="/add_candidate">
+                <h2>Add Candidate</h2>
+                <label for="election_id">Select Election:</label><br>
+                <select id="election_id" name="election_id" required>
+                    {% for election in elections %}
+                    <option value="{{ election.id }}">{{ election.election_name }} - {{ election.start_date }} to {{ election.end_date }}</option>
+                    {% endfor %}
+                </select><br>
+                <label for="candidate_name">Candidate Name:</label><br>
+                <input type="text" id="candidate_name" name="candidate_name" required><br>
+                <label for="party_affiliation">Party Affiliation:</label><br>
+                <input type="text" id="party_affiliation" name="party_affiliation"><br>
+                <button type="submit">Add Candidate</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
