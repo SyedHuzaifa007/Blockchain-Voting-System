@@ -25,7 +25,7 @@ def voterLogin():
     loginFrame.place(x=0, y=0, width="500", height="500")
     loginFrame.configure(background="white")
 
-    label = Label(loginFrame, text="Login to Vote", font=(ARIAL, 20, "bold"), bg="white", fg=HIGHLIGHT_TEXT)
+    label = Label(loginFrame, text="Login to Vote", font=(ARIAL, 20, "bold"), bg="white", fg="black")
     label.place(x=150, y=50)
 
     label0 = Label(loginFrame, text="Voter Id ", font=(ARIAL, 12, "normal"), bg="white")
@@ -46,7 +46,7 @@ def voterLogin():
 
         voterId.set("")
 
-    Login_btn = Button(loginFrame, text="Login", font=(ARIAL, 13, "bold"), command=Login, border=0, bg=HIGHLIGHT_BG, fg="white")
+    Login_btn = Button(loginFrame, text="Login", font=(ARIAL, 13, "bold"), command=Login, border=0, bg="black", fg="white")
     Login_btn.place(x=200, y=250, width=100, height=50)
     back_btn = Button(loginFrame, text="< Back", font=(ARIAL, 10, "normal"), command=VoterHome, border=0, bg="white", fg="grey")
     back_btn.place(x=0, y=0, width=100, height=50)
@@ -63,10 +63,10 @@ def dashboard(voterId):
     result = model.findByVoterId(voterId)
     name.set(result[2])
 
-    IDLabel = Label(DashboardFrame, text=voterId, font=(ARIAL, 13, "normal"), bg="white", fg=HIGHLIGHT_TEXT)
+    IDLabel = Label(DashboardFrame, text=voterId, font=(ARIAL, 13, "bold"), bg="white", fg="black")
     IDLabel.place(x=10, y=10)
 
-    label = Label(DashboardFrame, text="Your Vote, Your Voice", font=(LUCIDA_CONSOLE, 30, "bold"), bg="white", fg=HIGHLIGHT_BG)
+    label = Label(DashboardFrame, text="E-Voting System", font=(LUCIDA_CONSOLE, 30, "bold"), bg="white", fg="Black")
     label.place(x=175, y=50)
 
     nameLabel = Label(DashboardFrame, text="Hi, "+name.get(), font=(ARIAL, 15, "normal"), bg="white")
@@ -74,11 +74,11 @@ def dashboard(voterId):
 
     pollLabel = Label(DashboardFrame, text="Select your poll ", font=(ARIAL, 15, "normal"), bg="white")
     pollLabel.place(x=200, y=225)
-    pollInput = Combobox(root, values=["BJP", "TMC","SP","AAP"], font=(ARIAL, 13, "normal"), textvariable=poll)
+    pollInput = Combobox(root, values=["PMLN", "PTI","PPPP","IND"], font=(ARIAL, 13, "normal"), textvariable=poll)
     pollInput.place(x=400, y=225, width=200)
-    districtLabel = Label(DashboardFrame, text="Select your Distric", font=(ARIAL, 15, "normal"), bg="white")
+    districtLabel = Label(DashboardFrame, text="Select your District", font=(ARIAL, 15, "normal"), bg="white")
     districtLabel.place(x=200, y=275)
-    districtInput = Combobox(root, values=["Nashik", "Pune","Mumbai","Jalgaon","Satara"], font=(ARIAL, 13, "normal"), textvariable=district)
+    districtInput = Combobox(root, values=["Lahore", "Karachi","Peashawr","Quetta","Islamabad"], font=(ARIAL, 13, "normal"), textvariable=district)
     districtInput.place(x=400, y=275, width=200)
     
     def Vote():
@@ -102,9 +102,9 @@ def dashboard(voterId):
             name.set("")
             logout()
 
-    Vote_btn = Button(DashboardFrame, text="Vote", font=(ARIAL, 13, "normal"), command=Vote, border=0, bg=HIGHLIGHT_BG, fg="white")
+    Vote_btn = Button(DashboardFrame, text="Vote", font=(ARIAL, 13, "normal"), command=Vote, border=0, bg="Black", fg="white")
     Vote_btn.place(x=375, y=350, width=150, height=50)
-    logOut = Button(DashboardFrame, text="Log Out", font=(ARIAL, 10, "normal"), command=logout, border=0, bg="white", fg="grey")
+    logOut = Button(DashboardFrame, text="Log Out", font=(ARIAL, 10, "normal"), command=logout, border=0, bg="black", fg="white")
     logOut.place(x=800, y=0, width=100, height=50)
 
 
@@ -118,7 +118,7 @@ def voterRegistration():
     RegistrationFrame.place(x=0, y=0, width="500", height="500")
     RegistrationFrame.configure(background="white")
 
-    label = Label(RegistrationFrame, text="Register to Vote", font=(ARIAL, 20, "bold"), bg="white", fg=HIGHLIGHT_TEXT)
+    label = Label(RegistrationFrame, text="Register to Vote", font=(ARIAL, 20, "bold"), bg="white", fg="black")
     label.place(x=125, y=50)
 
     label0 = Label(RegistrationFrame, text="Voter Id ", font=(ARIAL, 12, "normal"), bg="white")
@@ -175,7 +175,7 @@ def voterRegistration():
                 messagebox.showerror('Voting System Message', 'cnic number must be 12 digit and Mobile number must be 10 digit')
 
 
-    Register_btn = Button(RegistrationFrame, text="Register", font=(ARIAL, 13, "bold"), command=Register, border=0, bg=HIGHLIGHT_BG, fg="white")
+    Register_btn = Button(RegistrationFrame, text="Register", font=(ARIAL, 13, "bold"), command=Register, border=0, bg="black", fg="white")
     Register_btn.place(x=150, y=390, width=200, height=50)
     back_btn = Button(RegistrationFrame, text="< Back", font=(ARIAL, 10, "normal"), command=VoterHome, border=0, bg="white", fg="grey")
     back_btn.place(x=0, y=0, width=100, height=50)
@@ -191,7 +191,7 @@ def AdminRegistration():
     AdminFrame = Frame()
     AdminFrame.place(x=0, y=0, width="500", height="500")
     AdminFrame.configure(background="white")
-    label = Label(AdminFrame, text="Register for voting system  ", font=(ARIAL, 20, "bold"), bg="white", fg=HIGHLIGHT_TEXT)
+    label = Label(AdminFrame, text="Register for voting system  ", font=(ARIAL, 20, "bold"), bg="white", fg="Black")
     label.place(x=60, y=50)
 
     IdLabel = Label(AdminFrame, text="Register Id ", font=(ARIAL, 12, "normal"), bg="white")
@@ -249,7 +249,7 @@ def AdminRegistration():
 
     
 
-    Register_btn = Button(AdminFrame, text="Register", font=(ARIAL, 13, "bold"), command=Register, border=0, bg=HIGHLIGHT_BG, fg="white")
+    Register_btn = Button(AdminFrame, text="Register", font=(ARIAL, 13, "bold"), command=Register, border=0, bg="black", fg="white")
     Register_btn.place(x=175, y=400, width=150, height=50)
     back_btn = Button(AdminFrame, text="< Back", font=(ARIAL, 10, "normal"), command=AdminHome, border=0, bg="white", fg="grey")
     back_btn.place(x=0, y=0, width=100, height=50)
@@ -259,15 +259,15 @@ def VoterHome():
     voterFrame = Frame()
     voterFrame.place(x=0, y=0, width="900", height="500")
     voterFrame.configure(background="white")
-    login_btn = Button(voterFrame, text="Login", font=(ARIAL, 13, "bold"),command=voterLogin, relief=FLAT, border=0, bg=HIGHLIGHT_BG, fg="white")
+    login_btn = Button(voterFrame, text="Login", font=(ARIAL, 13, "bold"),command=voterLogin, relief=FLAT, border=0, bg="black", fg="white")
     login_btn.place(x=150, y=150, width=150, height=50)
     btn_border = LabelFrame(voterFrame, bd = 0, bg = HIGHLIGHT_BG)
     btn_border.place(x=150, y=250, width=150, height=50)
-    reg_btn = Button(btn_border, text="Register", font=(ARIAL, 13, "bold"), command=voterRegistration, relief=FLAT, border=0, bg="white", fg=HIGHLIGHT_BG)
+    reg_btn = Button(btn_border, text="Register", font=(ARIAL, 13, "bold"), command=voterRegistration, relief=FLAT, border=0, bg="black", fg="white")
     reg_btn.place(x=1, y=1, width=148, height=48)
     back_btn = Button(voterFrame, text="< Back", font=(ARIAL, 10, "normal"), command=Home, border=0, bg="white", fg="grey")
     back_btn.place(x=0, y=0, width=100, height=50)
-    label = Label(voterFrame, text="Your Vote,\nYour Voice", font=(LUCIDA_CONSOLE, 30, "bold"), bg=HIGHLIGHT_BG, fg="white")
+    label = Label(voterFrame, text="E-Voting,\nSystem", font=(ARIAL, 30, "bold"), bg="light grey", fg="black")
     label.place(x=500, y=0, width=400, height=500)
 
 
@@ -334,9 +334,9 @@ def AdminLogin():
 
         regId.set("")
 
-    Login_btn = Button(LoginFrame, text="Login", font=(ARIAL, 13, "bold"), command=Login, border=0, bg=HIGHLIGHT_BG, fg="white")
+    Login_btn = Button(LoginFrame, text="Login", font=(ARIAL, 13, "bold"), command=Login, border=0, bg="Black", fg="white")
     Login_btn.place(x=200, y=250, width=100, height=50)
-    back_btn = Button(LoginFrame, text="< Back", font=(ARIAL, 10, "normal"), command=AdminHome, border=0, bg="white", fg="grey")
+    back_btn = Button(LoginFrame, text="< Back", font=(ARIAL, 10, "normal"), command=AdminHome, border=0, bg="Black", fg="white")
     back_btn.place(x=0, y=0, width=100, height=50)
 
 
@@ -359,30 +359,30 @@ def AdminDashboard(regId):
 
     admin = Frame(menu_bar)
     admin.place(x=0, y=0, width=249, height=100)
-    admin.configure(background=HIGHLIGHT_BG)
+    admin.configure(background="black")
 
-    label = Label(admin, text=regId, font=(ARIAL, 15, "bold", UNDERLINE), bg=HIGHLIGHT_BG, fg="white")
+    label = Label(admin, text=regId, font=(ARIAL, 15, "bold", UNDERLINE), bg="black", fg="white")
     label.place(x=10, y=25)
 
-    label = Label(admin, text=admin_name[2], font=(LUCIDA_CONSOLE, 13, "normal"), bg=HIGHLIGHT_BG, fg="white")
+    label = Label(admin, text=admin_name[2], font=(LUCIDA_CONSOLE, 13, "normal"), bg="black", fg="white")
     label.place(x=10, y=60)
 
-    update_btn = Button(menu_bar, text="Dashboard", font=(ARIAL, 13, "normal"), command=votingResults, border=0, bg="white", fg="grey", anchor="w", padx=30)
+    update_btn = Button(menu_bar, text="Dashboard", font=(ARIAL, 13, "normal"), command=votingResults, border=0, bg="black", fg="white", anchor="w", padx=30)
     update_btn.place(x=0, y=100, width=249, height=50)
 
-    delete_btn = Button(menu_bar, text="All Record", font=(ARIAL, 13, "normal"), command=showAllRecord, border=0, bg="white", fg="grey", anchor="w", padx=30)
+    delete_btn = Button(menu_bar, text="All Record", font=(ARIAL, 13, "normal"), command=showAllRecord, border=0, bg="black", fg="white", anchor="w", padx=30)
     delete_btn.place(x=0, y=151, width=249, height=50)
 
-    search_btn = Button(menu_bar, text="Search User", font=(ARIAL, 13, "normal"), command=searchUser, border=0, bg="white", fg="grey", anchor="w", padx=30)
+    search_btn = Button(menu_bar, text="Search User", font=(ARIAL, 13, "normal"), command=searchUser, border=0, bg="black", fg="white", anchor="w", padx=30)
     search_btn.place(x=0, y=202, width=249, height=50)
 
-    data_btn = Button(menu_bar, text="Update User Records", font=(ARIAL, 13, "normal"),command=updateUser, border=0, bg="white", fg="grey", anchor="w", padx=30)
+    data_btn = Button(menu_bar, text="Update User Records", font=(ARIAL, 13, "normal"),command=updateUser, border=0, bg="black", fg="white", anchor="w", padx=30)
     data_btn.place(x=0, y=253, width=249, height=50)
 
-    result_btn = Button(menu_bar, text="Delete User", font=(ARIAL, 13, "normal"),command=deleteUser, border=0, bg="white", fg="grey", anchor="w", padx=30)
+    result_btn = Button(menu_bar, text="Delete User", font=(ARIAL, 13, "normal"),command=deleteUser, border=0, bg="black", fg="white", anchor="w", padx=30)
     result_btn.place(x=0, y=304, width=249, height=50)
 
-    logOut_btn = Button(menu_bar, text="Log Out", font=(ARIAL, 13, "normal"), command=Home, border=0, bg="white", fg="grey", anchor="w", padx=30)
+    logOut_btn = Button(menu_bar, text="Log Out", font=(ARIAL, 13, "normal"), command=Home, border=0, bg="black", fg="white", anchor="w", padx=30)
     logOut_btn.place(x=0, y=355, width=249, height=50)
 
     space = Label(menu_bar, bg="white")
@@ -395,15 +395,15 @@ def votingResults():
     resultFrame.place(x=250, y=0, width=650, height=500)
     resultFrame.configure(background="white")
 
-    total=Label(resultFrame,text="Total vote",font=(LUCIDA_CONSOLE,15,"bold"),bg="white",fg=HIGHLIGHT_TEXT)
+    total=Label(resultFrame,text="Votes",font=(LUCIDA_CONSOLE,15,"bold"),bg="white",fg="black")
     total.place(x=150,y=50)
-    party1=Label(resultFrame,text="BJP",font=(LUCIDA_CONSOLE,15,"normal"),bg="white",fg="grey")
+    party1=Label(resultFrame,text="PMLN",font=(LUCIDA_CONSOLE,15,"normal"),bg="white",fg="grey")
     party1.place(x=150,y=150)
-    party2=Label(resultFrame,text="TMC",font=(LUCIDA_CONSOLE,15,"normal"),bg="white",fg="grey")
+    party2=Label(resultFrame,text="PTI",font=(LUCIDA_CONSOLE,15,"normal"),bg="white",fg="grey")
     party2.place(x=150,y=200)
-    party3=Label(resultFrame,text="SP",font=(LUCIDA_CONSOLE,15,"normal"),bg="white",fg="grey")
+    party3=Label(resultFrame,text="PPP",font=(LUCIDA_CONSOLE,15,"normal"),bg="white",fg="grey")
     party3.place(x=150,y=250)
-    party4=Label(resultFrame,text="AAP",font=(LUCIDA_CONSOLE,15,"normal"),bg="white",fg="grey")
+    party4=Label(resultFrame,text="IND",font=(LUCIDA_CONSOLE,15,"normal"),bg="white",fg="grey")
     party4.place(x=150,y=300)
     
     result = model.getTotalCount()
@@ -411,23 +411,23 @@ def votingResults():
     if result and t_user:  # Check if both result and t_user are not None
         totalCount = Label(resultFrame, text="{}  /  {}".format(result[0], t_user[0]), font=("", 15, "bold"), bg="white")
     else:
-        totalCount = Label(resultFrame, text="N/A", font=("", 15, "bold"), bg="white")
+        totalCount = Label(resultFrame, text="Seats", font=("", 15, "bold"), bg="white")
 
     totalCount.place(x=400,y=50)
 
-    result1 = model.getPartyCount("BJP")
+    result1 = model.getPartyCount("PMLN")
     count1=Label(resultFrame,text=result1, font=("",15,"bold"),bg="white")
     count1.place(x=400,y=150)
 
-    result1 = model.getPartyCount("TMC")
+    result1 = model.getPartyCount("PTI")
     count2=Label(resultFrame,text=result1, font=("",15,"bold"),bg="white")
     count2.place(x=400,y=200)
 
-    result1 = model.getPartyCount("SP")
+    result1 = model.getPartyCount("PPP")
     count3=Label(resultFrame,text=result1, font=("",15,"bold"),bg="white")
     count3.place(x=400,y=250)
 
-    result1 = model.getPartyCount("AAP")
+    result1 = model.getPartyCount("INDP")
     count4=Label(resultFrame,text=result1, font=("",15,"bold"),bg="white")
     count4.place(x=400,y=300)
 
@@ -505,7 +505,7 @@ def searchUser():
                 localityValue.place(x=150, y=150, height=30)
                     
 
-    search_btn = Button(SearchFrame, text="SEARCH", font=(ARIAL, 12, "bold"), command=search, border=0, bg=HIGHLIGHT_BG, fg="white")
+    search_btn = Button(SearchFrame, text="SEARCH", font=(ARIAL, 12, "bold"), command=search, border=0, bg="black", fg="white")
     search_btn.place(x=450, y=50, width=150, height=40)
 
 
@@ -574,10 +574,10 @@ def updateUser():
                         gender.set("")
                         cnic.set("")
 
-                update_btn = Button(DataFrame, text="Update", font=(ARIAL, 12, "normal"), command=update, border=0, bg=HIGHLIGHT_BG, fg="white")
+                update_btn = Button(DataFrame, text="Update", font=(ARIAL, 12, "normal"), command=update, border=0, bg="black", fg="white")
                 update_btn.place(x=150, y=175, width=100, height=40)
 
-    search_btn = Button(UpdateFrame, text="SEARCH", font=(ARIAL, 12, "bold"), command=search, border=0, bg=HIGHLIGHT_BG, fg="white")
+    search_btn = Button(UpdateFrame, text="SEARCH", font=(ARIAL, 12, "bold"), command=search, border=0, bg="black", fg="white")
     search_btn.place(x=450, y=50, width=150, height=40)
 
 
@@ -607,7 +607,7 @@ def deleteUser():
 
             cnic.set("")
 
-    delete_btn = Button(DeleteFrame, text="Delete", font=(ARIAL, 13, "normal"), command=delete, border=0, bg=HIGHLIGHT_BG, fg="white")
+    delete_btn = Button(DeleteFrame, text="Delete", font=(ARIAL, 13, "normal"), command=delete, border=0, bg="black", fg="white")
     delete_btn.place(x=250, y=230, width=150, height=40)
 
 

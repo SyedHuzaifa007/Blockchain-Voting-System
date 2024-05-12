@@ -1,11 +1,12 @@
-import pymssql
+import pyodbc
 
 # Connect with SQL Server database - Host Name - PORT No. - UserName - Password - Database name
-mydb = pymssql.connect(
-    server='103.31.104.114',
-    user='user',
-    password='12345678',
-    database='voting_system'
+mydb = pyodbc.connect(
+    "Driver={SQL Server};"
+    "Server=103.31.104.114;"
+    "UID=user;"
+    "PWD=12345678;"
+    "Database=voting_system;"
 )
 
 def connect():
@@ -16,7 +17,7 @@ def connect():
                                 id INT IDENTITY(1,1) PRIMARY KEY,
                                 registration_id VARCHAR(20) NOT NULL UNIQUE, 
                                 name VARCHAR(50) NOT NULL, 
-                                aadhar VARCHAR(12) NOT NULL UNIQUE, 
+                                cnic VARCHAR(12) NOT NULL UNIQUE, 
                                 phone VARCHAR(10) NOT NULL UNIQUE, 
                                 gender VARCHAR(7) NOT NULL)""")
         mycursor = mydb.cursor()
@@ -30,7 +31,7 @@ def connect():
                                 id INT IDENTITY(1,1) PRIMARY KEY,
                                 voter_id VARCHAR(20) NOT NULL UNIQUE, 
                                 name VARCHAR(50) NOT NULL, 
-                                aadhar VARCHAR(12) NOT NULL UNIQUE, 
+                                cnic VARCHAR(12) NOT NULL UNIQUE, 
                                 phone VARCHAR(10) NOT NULL UNIQUE, 
                                 gender VARCHAR(7) NOT NULL)""")
         print("[DONE]   BUILD SUCCESSFULLY!!")
@@ -40,14 +41,14 @@ def connect():
         print("--------------------------------------------------")
 
 
-def findByAadhar(aadhar):
+def findBycnic(cnic):
     try:
         mycursor = mydb.cursor()
-        mycursor.execute("EXEC FindUserByAadhar @Aadhar=?", (aadhar,))
+        mycursor.execute("EXEC FindUserBycnic @cnic=?", (cnic,))
         result = mycursor.fetchone()
         return result
     except Exception as e:
-        print("[WARN]   Failed to find user by aadhar")
+        print("[WARN]   Failed to find user by cnic")
 
 
 def findByVoterId(voterId):
@@ -59,11 +60,22 @@ def findByVoterId(voterId):
     except Exception as e:
         print("[WARN]   Failed to find user by Voter ID")
 
-def addVoter(voterId, name, aadhar, phone, gender):
+
+def audit_log(table_name, action, changed_by):
     try:
         mycursor = mydb.cursor()
-        mycursor.execute("EXEC AddVoter @VoterId=?, @Name=?, @Aadhar=?, @Phone=?, @Gender=?", (voterId, name, aadhar, phone, gender))
+        sql = "INSERT INTO AuditTrail (TableName, Action, ChangedBy, ChangeTime) VALUES (?, ?, ?, GETDATE())"
+        mycursor.execute(sql, (table_name, action, changed_by))
         mydb.commit()
+    except Exception as e:
+        print("[WARN]   Failed to log audit trail:", e)
+    
+def addVoter(voterId, name, cnic, phone, gender):
+    try:
+        mycursor = mydb.cursor()
+        mycursor.execute("EXEC AddVoter @VoterId=?, @Name=?, @cnic=?, @Phone=?, @Gender=?", (voterId, name, cnic, phone, gender))
+        mydb.commit()
+        audit_log('voters', 'Insert', 'Admin')
         return True
     except Exception as e:
         print("[WARN]   User Record failed to register")
@@ -99,24 +111,24 @@ def findByRegId(regId):
         print("[WARN]   Failed to find admin using Registered ID")
 
 
-def findByAadharinAdmin(aadhar):
+def findByCNICinAdmin(cnic):
     try:
         mycursor = mydb.cursor()
-        mycursor.execute("EXEC FindAdminByAadhar @Aadhar=?", (aadhar,))
+        mycursor.execute("EXEC FindAdminBycnic @cnic=?", (cnic,))
         result = mycursor.fetchone()
         return result
     except Exception as e:
-        print("[WARN]   Failed to find admin using Aadhar No.")
+        print("[WARN]   Failed to find admin using cnic No.")
 
-def addAdmin(regId, name, aadhar, phone, gender):
+def addAdmin(regId, name, cnic, phone, gender):
     try:
         mycursor = mydb.cursor()
         sql = "EXEC AddAdmin ?, ?, ?, ?, ?"
-        mycursor.execute(sql, (regId, name, aadhar, phone, gender))
+        mycursor.execute(sql, (regId, name, cnic, phone, gender))
         mydb.commit()
         return True
     except Exception as e:
-        print("[WARN]   Unable to register admin")
+        print("[WARN] Unable to register admin")
         return False
 
 
@@ -163,25 +175,25 @@ def getallVoters():
 
 
 
-def getUserByAadhar(aadhar):
+def getUserBycnic(cnic):
     try:
         mycursor = mydb.cursor()
         sql ="""SELECT voters.name, voters.phone, voters.gender, vote.district
                 FROM voters
                 LEFT JOIN vote ON voters.voter_id=vote.voter_id
-                WHERE aadhar = '{0}'""".format(aadhar)
+                WHERE cnic = '{0}'""".format(cnic)
         mycursor.execute(sql)
         result = mycursor.fetchone()
         return result
     except:
-        print("[WARN]   Failed to fetch user by aadhar")
+        print("[WARN]   Failed to fetch user by cnic")
 
 
-def updateUserByAadhar(name, phone, gender, aadhar):
+def updateUserBycnic(name, phone, gender, cnic):
     try:
         mycursor = mydb.cursor()
         sql ="""UPDATE voters SET name='{0}', phone='{1}', gender='{2}' 
-                WHERE aadhar='{3}'""".format(name, phone, gender, aadhar)
+                WHERE cnic='{3}'""".format(name, phone, gender, cnic)
         mycursor.execute(sql)
         mydb.commit()
         return True
@@ -190,11 +202,11 @@ def updateUserByAadhar(name, phone, gender, aadhar):
         return False
 
 
-def deleteUserByAadhar(aadhar):
+def deleteUserBycnic(cnic):
     try:
         mycursor = mydb.cursor()
         sql ="""DELETE FROM voters
-                WHERE aadhar = '{0}'""".format(aadhar)
+                WHERE cnic = '{0}'""".format(cnic)
         mycursor.execute(sql)
         mydb.commit()
         return True
