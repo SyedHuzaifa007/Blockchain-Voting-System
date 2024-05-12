@@ -1,23 +1,14 @@
-# import pyodbc
-
-# # Connect with SQL Server database - Host Name - PORT No. - UserName - Password - Database name
-# mydb = pyodbc.connect(
-#     "Driver={SQL Server};"
-#     "Server=103.31.104.114;"
-#     "UID=user;"
-#     "PWD=12345678;"
-#     "Database=voting_system;"
-# )
-
-import pymssql
+import pyodbc
 
 # Connect with SQL Server database - Host Name - PORT No. - UserName - Password - Database name
-mydb = pymssql.connect(
-    server='103.31.104.114',
-    user='user',
-    password='12345678',
-    database='voting_system'
+mydb = pyodbc.connect(
+    "Driver={SQL Server};"
+    "Server=103.31.104.114;"
+    "UID=user;"
+    "PWD=12345678;"
+    "Database=voting_system;"
 )
+
 
 def connect():
     try:
@@ -54,8 +45,7 @@ def connect():
 def findByAadhar(aadhar):
     try:
         mycursor = mydb.cursor()
-        sql = "SELECT  * FROM voters WHERE aadhar='%s'" % aadhar
-        mycursor.execute(sql)
+        mycursor.execute("EXEC FindUserByAadhar @Aadhar=?", (aadhar,))
         result = mycursor.fetchone()
         return result
     except Exception as e:
@@ -65,127 +55,114 @@ def findByAadhar(aadhar):
 def findByVoterId(voterId):
     try:
         mycursor = mydb.cursor()
-        sql = "SELECT  * FROM voters WHERE voter_id='%s'"%voterId
-        mycursor.execute(sql)
+        mycursor.execute("EXEC FindUserByVoterId @VoterId=?", (voterId,))
         result = mycursor.fetchone()
         return result
-    except:
+    except Exception as e:
         print("[WARN]   Failed to find user by Voter ID")
-
 
 def addVoter(voterId, name, aadhar, phone, gender):
     try:
         mycursor = mydb.cursor()
-        sql = "INSERT INTO voters(voter_id, name, aadhar, phone, gender) VALUES('{0}', '{1}', '{2}', '{3}', '{4}')".format(voterId, name, aadhar, phone, gender)
-        mycursor.execute(sql)
+        mycursor.execute("EXEC AddVoter @VoterId=?, @Name=?, @Aadhar=?, @Phone=?, @Gender=?", (voterId, name, aadhar, phone, gender))
         mydb.commit()
         return True
-    except:
+    except Exception as e:
         print("[WARN]   User Record failed to register")
         return False
-
 
 def submitVote(voterId, poll, district):
     try:
         mycursor = mydb.cursor()
-        sql = "INSERT INTO vote(voter_id, poll, district) VALUES('{0}', '{1}', '{2}')".format(voterId, poll, district)
-        mycursor.execute(sql)
+        mycursor.execute("EXEC SubmitVote @VoterId=?, @Poll=?, @District=?", (voterId, poll, district))
         mydb.commit()
         return True
-    except:
+    except Exception as e:
         print("[WARN]   Unable to submit Vote")
         return False
-
 
 def findByVoterIdinVote(voterId):
     try:
         mycursor = mydb.cursor()
-        sql = "SELECT  * FROM vote WHERE voter_id='%s'"%voterId
-        mycursor.execute(sql)
+        mycursor.execute("EXEC FindVoteByVoterId @VoterId=?", (voterId,))
         result = mycursor.fetchone()
         return result
-    except:
+    except Exception as e:
         print("[WARN]   Error during finding voter from vote entity")
 
 
 def findByRegId(regId):
     try:
         mycursor = mydb.cursor()
-        sql = "SELECT  * FROM admin WHERE registration_id='%s'"%regId
-        mycursor.execute(sql)
+        mycursor.execute("EXEC FindAdminByRegId @RegId=?", (regId,))
         result = mycursor.fetchone()
         return result
-    except:
+    except Exception as e:
         print("[WARN]   Failed to find admin using Registered ID")
 
 
 def findByAadharinAdmin(aadhar):
     try:
         mycursor = mydb.cursor()
-        sql = "SELECT  * FROM admin WHERE aadhar='%s'"%aadhar
-        mycursor.execute(sql)
+        mycursor.execute("EXEC FindAdminByAadhar @Aadhar=?", (aadhar,))
         result = mycursor.fetchone()
         return result
-    except:
+    except Exception as e:
         print("[WARN]   Failed to find admin using Aadhar No.")
-
 
 def addAdmin(regId, name, aadhar, phone, gender):
     try:
         mycursor = mydb.cursor()
-        sql = "INSERT INTO admin(registration_id, name, aadhar, phone, gender) VALUES('{0}', '{1}', '{2}', '{3}', '{4}')".format(regId, name, aadhar, phone, gender)
-        mycursor.execute(sql)
+        sql = "EXEC AddAdmin ?, ?, ?, ?, ?"
+        mycursor.execute(sql, (regId, name, aadhar, phone, gender))
         mydb.commit()
         return True
-    except:
-        print("[WARN]   Unable register admin")
+    except Exception as e:
+        print("[WARN]   Unable to register admin")
         return False
 
 
 def getTotalCount():
     try:
         mycursor = mydb.cursor()
-        sql = "SELECT count(*) FROM vote"
-        mycursor.execute(sql)
+        mycursor.execute("EXEC GetTotalVoteCount")
         result = mycursor.fetchone()
-        return result
-    except:
+        return result['TotalCount']
+    except Exception as e:
         print("[WARN]   Error while fetching total vote count")
-
 
 def getTotalUserCount():
     try:
         mycursor = mydb.cursor()
-        sql = "SELECT count(*) FROM voters"
-        mycursor.execute(sql)
+        mycursor.execute("EXEC GetTotalUserCount")
         result = mycursor.fetchone()
-        return result
-    except:
-        print("[WARN]   Error while fetching total user count")
+        return result[0]  # Returning the total user count
+    except Exception as e:
+        print("[WARN]   Error while fetching total user count:", e)
+        return None
 
 
 def getPartyCount(party):
     try:
         mycursor = mydb.cursor()
-        sql = "SELECT count(*) FROM vote WHERE poll like '%{0}%'".format(party)
-        mycursor.execute(sql)
-        result = mycursor.fetchall()
-        return result
-    except:
-        print("[WARN]   Error while fetching party count")
+        mycursor.execute("EXEC GetPartyCount @Party=?", (party,))
+        result = mycursor.fetchone()
+        return result[0]  # Returning the party count
+    except Exception as e:
+        print("[WARN]   Error while fetching party count:", e)
+        return None
 
 
 def getallVoters():
     try:
         mycursor = mydb.cursor()
-        sql ="""SELECT voters.name, voters.phone, voters.gender, vote.district
-                FROM voters
-                LEFT JOIN vote ON voters.voter_id=vote.voter_id;"""
-        mycursor.execute(sql)
+        mycursor.execute("EXEC GetAllVoters")
         result = mycursor.fetchall()
         return result
-    except:
-        print("[WARN]   Failed to fetch all Voters record")
+    except Exception as e:
+        print("[WARN]   Failed to fetch all Voters record:", e)
+        return None
+
 
 
 def getUserByAadhar(aadhar):
