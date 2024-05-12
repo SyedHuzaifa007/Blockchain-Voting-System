@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
-app.config['SQLALCHEMY_DATABASE_URI'] ="mssql+pyodbc://user:12345678@103.31.104.114:1433/Voting?driver=ODBC+Driver+17+for+SQL+Server"
+app.config['SQLALCHEMY_DATABASE_URI'] ="mssql+pyodbc://user:12345678@103.31.104.114:1433/Voting2?driver=ODBC+Driver+17+for+SQL+Server"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
